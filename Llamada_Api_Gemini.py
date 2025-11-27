@@ -150,6 +150,28 @@ class Llamada_Api_Gemini:
             except APIError as e:
                 print(f"❌ Error al eliminar el almacén: {e}")
 
+    def iniciar_rag(self, nombre_almacen: str, ruta_carpeta: str = "./Documentos"):
+    
+        print("\n=== 🚀 INICIANDO PREPARACIÓN RAG ===")
+        
+        # 1. Crear el FileSearchStore
+        almacen = self.crear_almacen_busqueda(nombre_almacen=nombre_almacen)
+        
+        if not almacen:
+            print("🛑 Fallo en la preparación: No se pudo crear el almacén.")
+            return False
+            
+        # 2. Subir e indexar la carpeta
+        archivos_indexados = self.subir_carpeta(ruta_carpeta=ruta_carpeta)
+        
+        if archivos_indexados:
+            print(f"=== ✅ RAG LISTO: {len(archivos_indexados)} archivos indexados. ===\n")
+            return True
+        else:
+            print("=== ⚠️ RAG INACTIVO: No se subieron archivos al almacén. ===\n")
+            return False
+
+
 
 
     def hacer_pregunta(self, pregunta: str, historial: List[Tuple[str, str]], modelo: str = "gemini-2.5-flash", top_k: int = 3):
@@ -245,27 +267,6 @@ class Llamada_Api_Gemini:
         return conversacion
 
    
-    def iniciar_rag(self, nombre_almacen: str, ruta_carpeta: str = "./Documentos"):
-    
-        print("\n=== 🚀 INICIANDO PREPARACIÓN RAG ===")
-        
-        # 1. Crear el FileSearchStore
-        almacen = self.crear_almacen_busqueda(nombre_almacen=nombre_almacen)
-        
-        if not almacen:
-            print("🛑 Fallo en la preparación: No se pudo crear el almacén.")
-            return False
-            
-        # 2. Subir e indexar la carpeta
-        archivos_indexados = self.subir_carpeta(ruta_carpeta=ruta_carpeta)
-        
-        if archivos_indexados:
-            print(f"=== ✅ RAG LISTO: {len(archivos_indexados)} archivos indexados. ===\n")
-            return True
-        else:
-            print("=== ⚠️ RAG INACTIVO: No se subieron archivos al almacén. ===\n")
-            return False
-
 
 
 

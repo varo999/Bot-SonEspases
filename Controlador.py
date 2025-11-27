@@ -1,5 +1,5 @@
 from TelegramBot import*
-from Llamada_Api import *
+from Llamada_Api_Gemini import *
 from MemoriaConversacional import *
 
 class Controlador:
