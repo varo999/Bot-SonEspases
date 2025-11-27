@@ -10,7 +10,7 @@ import os
 import glob
 from google.genai import types
 
-CLAVE_API = "AIzaSyBwiBbI2wjKkBz8y40G6uVS7_cmJBwSDtU"
+CLAVE_API = os.getenv("GEMINI_API_KEY")
 
 class Llamada_Api_Gemini:
     
