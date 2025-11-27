@@ -1,7 +1,11 @@
 from Controlador import *
+import os
+import sys
 
-CLAVE_API = "AIzaSyBwiBbI2wjKkBz8y40G6uVS7_cmJBwSDtU"
+CLAVE_API = os.getenv("Clave_Api_Gemini")
 BOT_TOKEN = "8193853610:AAH-MrO2x7HAjXApp8RvL2IYPDTMZPtvOm8"
+
+
 preguntas_listado=[#PLC_Annex_2024-225.pdf
 "¿Cuál es el nombre del centro educativo y el curso académico al que se aplica el anexo del Proyecto Lingüístico que se detalla en el documento?"
 "¿Cuáles son los tres idiomas principales utilizados para impartir los módulos en los ciclos formativos que se enumeran a lo largo del anexo?"
@@ -57,7 +61,7 @@ if __name__ == "__main__":
     print("Iniciando Controlador......")
     
     controlador = None
-
+    
     try:
         controlador = Controlador(
             api_key=CLAVE_API, 
