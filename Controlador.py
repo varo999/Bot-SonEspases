@@ -34,7 +34,7 @@ class Controlador:
             return respuesta
         else:
             return "Lo siento, no pude obtener una respuesta de Gemini. Verifica la configuración del almacén."
-        
+
     def limpiar_todo(self):
         """ Llama al método de instancia para borrar el almacén. """
 

@@ -1,6 +1,8 @@
 '''
 HAY QUE SEPARAR LO QUE SON LAS CONEXIONES CON LAS FUNCIONES, INCLUSO 
-LAS DISTINTAS APIS
+LAS DISTINTAS APIS,
+DONDE CREAMOS EL BOT DE TELEGRAM UTILIZA POLLING, QUE SIGNIFICA QUE TODO EL RATO
+ESTA ESCUCHANDO, POR ESTE MOTIVO LO HEMOS PUESTO EN UNA MAQUINA VIRTUAL.
 '''
 
 from typing import List, Tuple
@@ -10,17 +12,17 @@ import os
 import glob
 from google.genai import types
 
-CLAVE_API = os.getenv("GEMINI_API_KEY")
-
 class Llamada_Api_Gemini:
     
     def __init__(self, clave_api: str, controlador):
     
-        self.client = genai.Client(api_key=clave_api)
-        
+        self.clave_api = clave_api
+        self.client = None
         self.almacen_archivos = None    
         self.controlador = controlador   
         self.archivos_subidos = []       
+        
+        self._inicializar_cliente()
         
         print("Cliente de Gemini inicializado.")
 
@@ -171,14 +173,15 @@ class Llamada_Api_Gemini:
             print("=== ⚠️ RAG INACTIVO: No se subieron archivos al almacén. ===\n")
             return False
 
-
-
-
     def hacer_pregunta(self, pregunta: str, historial: List[Tuple[str, str]], modelo: str = "gemini-2.5-flash", top_k: int = 3):
         """
         Realiza una pregunta a Gemini, utilizando el historial de conversación 
         y la herramienta FileSearch para RAG, restringiendo la respuesta solo a los documentos.
         """
+        if self._inicializar_cliente():
+            print("❌ Error Fatal: No se pudo asegurar ni restaurar la conexión con Gemini.")
+            return None
+
         if not self.almacen_archivos:
             print("❌ Error: No hay FileSearchStore configurado para hacer preguntas.")
             return None
@@ -266,7 +269,23 @@ class Llamada_Api_Gemini:
         
         return conversacion
 
-   
+    def _inicializar_cliente(self):
+        """Intenta inicializar el cliente de Gemini y maneja errores."""
+        
+        # 🎯 NUEVO: Si self.client ya está inicializado, sale de la función inmediatamente.
+        if self.client is not None:
+            # Opcional: Puedes añadir un print si quieres ver que se omitió la inicialización
+            # print("ℹ️ Cliente de Gemini ya existe. Omitiendo la inicialización.")
+            return
 
+        # El resto del código solo se ejecuta si self.client era None.
+        if self.clave_api is None or self.clave_api == "":
+            print("ADVERTENCIA: Clave API no proporcionada. No se puede inicializar el cliente.")
+            return
 
-
+        try:
+            self.client = genai.Client(api_key=self.clave_api)
+            print("✅ Cliente de Gemini inicializado correctamente.")
+        except Exception as e:
+            print(f"❌ ERROR: Fallo al inicializar el cliente: {e}")
+            self.client = None

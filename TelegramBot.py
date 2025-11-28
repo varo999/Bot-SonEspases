@@ -10,6 +10,12 @@ from telegram.ext import (
 )
 import sys
 
+tokens=["8545696064:AAFIX_bmizeaLIxlOEYXwIbAkf-f3kXQW9U"
+"8384733305:AAFCdE9VFb4gC4Cook7AKuEnkNJVy-JvSPc"
+"8269103613:AAG8jYrgULoz2_CKxtbAzgtM8_8afQE7C8E"
+"7762332336:AAEMfzF_0WiZjcQ10ELlsEKVBC06wJgMNGU"
+"8517231263:AAGOpOetMn_eVB24N89ye0IJhfLERx0XJ8w"]
+
 class TelegramBot:
     def __init__(self, token: str, controlador):
         persistence = PicklePersistence(filepath="user_data.pkl")
