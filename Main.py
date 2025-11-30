@@ -1,10 +1,10 @@
 from Controlador import *
 import os
 import sys
+from TelegramBot import * 
 
 CLAVE_API = os.getenv("Clave_Api_Gemini")
 BOT_TOKEN = "8193853610:AAH-MrO2x7HAjXApp8RvL2IYPDTMZPtvOm8"
-
 
 preguntas_listado=[#PLC_Annex_2024-225.pdf
 "¿Cuál es el nombre del centro educativo y el curso académico al que se aplica el anexo del Proyecto Lingüístico que se detalla en el documento?"
@@ -55,7 +55,6 @@ preguntas_listado=[#PLC_Annex_2024-225.pdf
 "¿Cómo se estructura el pla de convivència segons el document?"
 "¿Qué procedimientos existen para actuar en casos daccidents escolars o absències del professorat?"
 ]
-
 
 if __name__ == "__main__":
     print("Iniciando Controlador......")
