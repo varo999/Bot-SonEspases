@@ -1,7 +1,7 @@
 from Controlador import *
 import os
 import sys
-from TelegramBot import * 
+
 
 CLAVE_API = os.getenv("Clave_Api_Gemini")
 BOT_TOKEN = "8193853610:AAH-MrO2x7HAjXApp8RvL2IYPDTMZPtvOm8"
