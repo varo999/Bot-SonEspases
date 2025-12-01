@@ -85,19 +85,3 @@ class TelegramBot:
         print("Bot iniciado (clase TelegramBot), esperando mensajes...")
         self.app.run_polling()
     
-    async def enviar_pregunta_a_otro_bot(self, pregunta: str, chat_id_destino: int) -> bool:
-        try:
-            # Crea una instancia de Bot para el envío
-            bot_enviador = self.app.bot 
-            
-            # Envía el mensaje al chat usando el parámetro de la función
-            await bot_enviador.send_message(
-                chat_id=chat_id_destino, 
-                text=pregunta
-            )
-            print(f"✅ Pregunta enviada al CHAT ID {chat_id_destino} con éxito.")
-            return True
-        except Exception as e:
-            error_msg = f"❌ Error al intentar enviar la pregunta a otro bot (Chat ID: {chat_id_destino}): {e}"
-            print(error_msg, file=sys.stderr)
-            return False

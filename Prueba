@@ -1,0 +1,36 @@
+import os
+# Asegúrate de que las rutas de importación sean correctas
+from ControladorGemini import ControladorGemini 
+
+# --- Obtener Clave API ---
+try:
+    # 🌟 Usamos os.environ para obtener la clave configurada en tu entorno
+    CLAVE_API = os.environ["Clave_Api_Gemini"]
+except KeyError:
+    print("❌ ERROR: La variable de entorno 'CLAVE_API_GEMINI' no está configurada.")
+    CLAVE_API = None 
+
+
+# --- Función Principal de Arranque ---
+def ejecutar_aplicacion():
+    """
+    Función que inicializa y ejecuta el Controlador Gemini.
+    """
+    if not CLAVE_API:
+        print("🛑 No se puede ejecutar la aplicación. La clave API es necesaria.")
+        return
+
+    print("\n--- Iniciando Sistema de Generación Aumentada por Recuperación (RAG) ---")
+    
+    try:
+        controlador_app = ControladorGemini(clave_api=CLAVE_API)
+        
+        print("\n🎉 ÉXITO: El sistema de capas Gemini se ha inicializado y el almacén RAG se ha configurado.")
+        
+  
+        
+    except Exception as e:
+        print(f"\n❌ FALLO CRÍTICO al inicializar el Controlador o el flujo RAG: {e}")
+
+if __name__ == "__main__":
+    ejecutar_aplicacion()

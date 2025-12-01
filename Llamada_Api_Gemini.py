@@ -133,25 +133,6 @@ class Llamada_Api_Gemini:
         except APIError as e:
             print(f"❌ Error al eliminar el almacén: {e}")
 
-    def eliminar_almacen_busqueda(self):
-            if not self.almacen_archivos:
-                print("No hay almacén configurado para eliminar.")
-                return
-
-            nombre_almacen = self.almacen_archivos.name
-
-            try:
-                print(f"Borrando almacén: {nombre_almacen} con force=True...")
-                self.client.file_search_stores.delete(
-                    name=nombre_almacen,
-                    config={'force': True}
-                )
-                self.almacen_archivos = None
-                self.archivos_subidos = []
-                print(f"✅ Almacén '{nombre_almacen}' eliminado correctamente.")
-            except APIError as e:
-                print(f"❌ Error al eliminar el almacén: {e}")
-
     def iniciar_rag(self, nombre_almacen: str, ruta_carpeta: str = "./Documentos"):
     
         print("\n=== 🚀 INICIANDO PREPARACIÓN RAG ===")

@@ -1,14 +1,13 @@
 from TelegramBot import*
 from Llamada_Api_Gemini import *
 from MemoriaConversacional import *
+from ControladorGemini import *
 
 class Controlador:
     def __init__(self, api_key: str, token : str,):
-        # 🤖 Inicialización de la clase de la llamada a la API
-        self.asistente_gemini = Llamada_Api_Gemini(clave_api=api_key,controlador=self)
-        self.asistente_gemini.iniciar_rag( nombre_almacen ="TelegramBotRAGStore")
-
-
+   
+        self.controlador_gemini = ControladorGemini(clave_api=api_key)
+        
         self.memoria_conversacional=MemoriaConversacional()
 
         # 💬 Inicialización de la clase del bot de Telegram 
@@ -24,7 +23,7 @@ class Controlador:
         print(f"Controlador: Procesando pregunta para el Usuario ID: {user_id}")
         historial_cargado = self.memoria_conversacional.cargar_historial(user_id)
         
-        respuesta = self.asistente_gemini.hacer_pregunta(
+        respuesta = self.controlador_gemini.hacer_pregunta(
             pregunta=pregunta,
             historial=historial_cargado)
         
@@ -41,6 +40,6 @@ class Controlador:
         print("Controlador: Solicitando la eliminación del almacén de File Search...")
         
         # Llamar a la funcion eliminar_almacen_busqueda del AsistenteRAGGemini
-        self.asistente_gemini.eliminar_almacen_busqueda()
+        self.controlador_gemini.eliminar_almacen_busqueda()
         
         print("✅ Almacén de File Search borrado por el controlador.")
